@@ -1,7 +1,7 @@
 .globl factorial
 
 .data
-n: .word 4
+n: .word 5
 
 .text
 # Don't worry about understanding the code in main
@@ -27,17 +27,18 @@ main:
 # The return value should be stored in a0
 factorial:
     # YOUR CODE HERE
-    li t0, 1
-    addi t1, a0, 0
-loop:
-    li t2, 2
-    add t3, a0, x0 # t3 = a0
-muli:#a0*t1
-    add a0, a0, t3
-    addi t2, t2, 1
-    bne t1, t2, muli # for(t2 = 0; t2 < t1; t2++)
-    addi t1, t1, -1
-    bne t1, t0, loop # for(t1 = a0;t1 > t0; t1--)
+    addi t1, a0, 0 # int t1;
+    addi t2, a0, 0 # int t2 = n;
+    li t3, 1 # int sum = 1;
+    li t4, 0
+loop:   # for(int t4 = 0; t4 < t2; t4++){
+        beq t4, t2, Done     
+        mul t3, t1, t3 #    sum *= t1;
+        addi t1, t1, -1 #    t1--;
+        addi t4, t4, 1
+        j loop
+Done:
+        addi a0, t3, 0
     # This is how you return from a function. You'll learn more about this later.
     # This should be the last line in your program.
     jr ra
